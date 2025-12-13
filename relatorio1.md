@@ -1,24 +1,24 @@
-# Relatório Primeiros Passos (Pedro Muniz)
+---
+marp: true
+---
+
+# Relatório 1
 
 ## Configuração e Validação do Ambiente SDN com Mininet e POX
 
 ### 1. Objetivo
 
-Atribuição: preparar, configurar e validar o ambiente de experimentação
-SDN utilizado pelo grupo, garantindo que a topologia, switches, hosts e
-controlador SDN estejam funcionando corretamente.\
-Este passo foca exclusivamente no ambiente base: **Mininet**, **POX** e
-**testes de conectividade**.
+Atribuição: preparar, configurar e validar o ambiente de experimentação SDN utilizado pelo grupo, garantindo que a topologia, switches, hosts e controlador SDN estejam funcionando corretamente.
+
+Este passo foca exclusivamente no ambiente base: **Mininet**, **POX** e **testes de conectividade**.
 
 ------------------------------------------------------------------------
 
 ### 2. Instalação do Mininet
 
-O Mininet é um emulador de rede que permite a criação de redes virtuais
-para testes de SDN.
+O Mininet é um emulador de rede que permite a criação de redes virtuais para testes de SDN.
 
-Ele foi instalado no ambiente WSL no Windows 11, seguindo os passos
-padrão:
+Ele foi instalado no ambiente WSL no Windows 11, seguindo os passos padrão:
 
 ``` bash
 sudo apt update
@@ -35,8 +35,7 @@ mn --version
 
 ### 3. Instalação do POX
 
-O POX é um controlador SDN escrito em Python, utilizado para gerenciar
-redes de software definidas.
+O POX é um controlador SDN escrito em Python, utilizado para gerenciar redes de software definidas.
 
 Foi obtido via repositório git:
 
@@ -78,11 +77,13 @@ Após a criação da topologia, realizou‑se o teste de conectividade:
 mininet> pingall
 ```
 
-Resultado obtido: - **0% de pacotes perdidos** - Conectividade plena
-entre h1, h2 e h3
+Resultado obtido: 
+- **0% de pacotes perdidos** 
+- Conectividade plena entre h1, h2 e h3
 
-Esse teste valida: - funcionamento dos links\
-- switches conectados ao controlador\
+Esse teste valida: 
+- funcionamento dos links
+- switches conectados ao controlador
 - regras de fluxo sendo instaladas
 
 ------------------------------------------------------------------------
@@ -91,13 +92,12 @@ Esse teste valida: - funcionamento dos links\
 
 O controlador POX exibiu corretamente:
 
--   Mensagens de inicialização\
--   Conexão dos switches\
--   Instalação automática de fluxos\
+-   Mensagens de inicialização
+-   Conexão dos switches
+-   Instalação automática de fluxos
 -   Tabelas de aprendizado MAC
 
-Essas mensagens confirmam que o controlador está recebendo eventos
-OpenFlow da rede Mininet.
+Essas mensagens confirmam que o controlador está recebendo eventos OpenFlow da rede Mininet.
 
 ------------------------------------------------------------------------
 
@@ -105,15 +105,13 @@ OpenFlow da rede Mininet.
 
 O ambiente de testes SDN está funcional, com:
 
--   Mininet operando corretamente\
--   POX ativo e recebendo eventos\
--   Switches e hosts intercomunicando\
--   Fluxos de aprendizado funcionando\
+-   Mininet operando corretamente
+-   POX ativo e recebendo eventos
+-   Switches e hosts intercomunicando
+-   Fluxos de aprendizado funcionando
 -   Nenhuma perda de pacotes nos testes
 
-Este ambiente agora está disponível para as próximas atividades
-do projeto (implementação de controladores customizados,
-métricas, tabelas de fluxo, gráficos etc.).
+Este ambiente agora está disponível para as próximas atividades do projeto (implementação de controladores customizados, métricas, tabelas de fluxo, gráficos etc.).
 
 ------------------------------------------------------------------------
 
@@ -121,8 +119,8 @@ métricas, tabelas de fluxo, gráficos etc.).
 
 Os prints coletados incluem:
 
-1.  Execução do Mininet\
-2.  Resultado do pingall (0% dropped)\
+1.  Execução do Mininet
+2.  Resultado do pingall (0% dropped)
 3.  Execução do POX com logs de fluxos sendo instalados
 
 (As imagens devem ser anexadas na versão final do relatório.)
