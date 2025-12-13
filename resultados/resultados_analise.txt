@@ -1,0 +1,81 @@
+Resultados da Analise
+
+Medição de Latência
+    mininet> h1 ping -c 10 h2
+        PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+        64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=3.35 ms
+        64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=0.499 ms
+        64 bytes from 10.0.0.2: icmp_seq=3 ttl=64 time=0.066 ms
+        64 bytes from 10.0.0.2: icmp_seq=4 ttl=64 time=0.069 ms
+        64 bytes from 10.0.0.2: icmp_seq=5 ttl=64 time=0.059 ms
+        64 bytes from 10.0.0.2: icmp_seq=6 ttl=64 time=0.066 ms
+        64 bytes from 10.0.0.2: icmp_seq=7 ttl=64 time=0.058 ms
+        64 bytes from 10.0.0.2: icmp_seq=8 ttl=64 time=0.069 ms
+        64 bytes from 10.0.0.2: icmp_seq=9 ttl=64 time=0.060 ms
+        64 bytes from 10.0.0.2: icmp_seq=10 ttl=64 time=0.064 ms
+
+    mininet> h1 ping -c 10 h3
+        PING 10.0.0.3 (10.0.0.3) 56(84) bytes of data.
+        64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=4.84 ms
+        64 bytes from 10.0.0.3: icmp_seq=2 ttl=64 time=0.733 ms
+        64 bytes from 10.0.0.3: icmp_seq=3 ttl=64 time=0.074 ms
+        64 bytes from 10.0.0.3: icmp_seq=4 ttl=64 time=0.068 ms
+        64 bytes from 10.0.0.3: icmp_seq=5 ttl=64 time=0.069 ms
+        64 bytes from 10.0.0.3: icmp_seq=6 ttl=64 time=0.070 ms
+        64 bytes from 10.0.0.3: icmp_seq=7 ttl=64 time=0.168 ms
+        64 bytes from 10.0.0.3: icmp_seq=8 ttl=64 time=0.058 ms
+        64 bytes from 10.0.0.3: icmp_seq=9 ttl=64 time=0.062 ms
+        64 bytes from 10.0.0.3: icmp_seq=10 ttl=64 time=0.065 ms
+
+    mininet> h2 ping -c 10 h3
+        PING 10.0.0.3 (10.0.0.3) 56(84) bytes of data.
+        64 bytes from 10.0.0.3: icmp_seq=1 ttl=64 time=3.44 ms
+        64 bytes from 10.0.0.3: icmp_seq=2 ttl=64 time=0.562 ms
+        64 bytes from 10.0.0.3: icmp_seq=3 ttl=64 time=0.061 ms
+        64 bytes from 10.0.0.3: icmp_seq=4 ttl=64 time=0.066 ms
+        64 bytes from 10.0.0.3: icmp_seq=5 ttl=64 time=0.064 ms
+        64 bytes from 10.0.0.3: icmp_seq=6 ttl=64 time=0.069 ms
+        64 bytes from 10.0.0.3: icmp_seq=7 ttl=64 time=0.065 ms
+        64 bytes from 10.0.0.3: icmp_seq=8 ttl=64 time=0.062 ms
+        64 bytes from 10.0.0.3: icmp_seq=9 ttl=64 time=0.063 ms
+        64 bytes from 10.0.0.3: icmp_seq=10 ttl=64 time=0.064 ms
+	
+
+Medição de Vazão
+	mininet> h2 iperf -s &
+	mininet> h1 iperf -c h2 -t 10
+		[  1] local 10.0.0.1 port 53122 connected with 10.0.0.2 port 5001 (icwnd/mss/irtt=14/1448/48116)
+		[ ID] Interval       Transfer     Bandwidth
+		[  1] 0.0000-11.0763 sec   125 MBytes  94.8 Mbits/sec
+		
+	mininet> h3 iperf -s &
+	mininet> h1 iperf -c h3 -t 10
+		[  1] local 10.0.0.1 port 54986 connected with 10.0.0.3 port 5001 (icwnd/mss/irtt=14/1448/112518)
+		[ ID] Interval       Transfer     Bandwidth
+		[  1] 0.0000-11.2900 sec   125 MBytes  93.2 Mbits/sec
+	
+	mininet> h3 iperf -s &
+	mininet> h2 iperf -c h3 -t 10
+		------------------------------------------------------------
+		Server listening on TCP port 5001
+		TCP window size: 85.3 KByte (default)
+		------------------------------------------------------------
+		[  1] local 10.0.0.2 port 5001 connected with 10.0.0.1 port 53122 (icwnd/mss/irtt=14/1448/22095)
+		[ ID] Interval       Transfer     Bandwidth
+		[  1] 0.0000-11.0414 sec   125 MBytes  95.1 Mbits/sec
+		------------------------------------------------------------
+		Client connecting to 10.0.0.3, TCP port 5001
+		TCP window size: 85.3 KByte (default)
+		------------------------------------------------------------
+		[  1] local 10.0.0.2 port 45210 connected with 10.0.0.3 port 5001 (icwnd/mss/irtt=14/1448/68426)
+		[ ID] Interval       Transfer     Bandwidth
+		[  1] 0.0000-14.0662 sec   125 MBytes  74.6 Mbits/sec
+
+	mininet> dump
+        <Host h1: h1-eth0:10.0.0.1 pid=3399> 
+        <Host h2: h2-eth0:10.0.0.2 pid=3401>
+        <Host h3: h3-eth0:10.0.0.3 pid=3403>
+        <OVSSwitch s1: lo:127.0.0.1,s1-eth1:None,s1-eth2:None pid=3408>
+        <OVSSwitch s2: lo:127.0.0.1,s2-eth1:None,s2-eth2:None,s2-eth3:None pid=3411>
+        <OVSSwitch s3: lo:127.0.0.1,s3-eth1:None,s3-eth2:None pid=3414>
+        <RemoteController{'ip': '127.0.0.1', 'port': 6633} c0: 127.0.0.1:6633 pid=3393>
