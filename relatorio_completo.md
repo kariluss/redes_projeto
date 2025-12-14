@@ -56,6 +56,46 @@ A topologia utilizada faz parte do escopo de testes iniciais, contendo:
 -   Controlador externo POX
 -   Links de 100 Mbps com atraso de 10--15 ms
 
+### 4.1. Código da Topologia
+O código da topologia está disponível em: [topo_projeto.py](topo_projeto.py)
+
+Primeiro houve a importação da classe Topo do Mininet, que é usada para criar topologias personalizadas.
+``` python
+from mininet.topo import Topo
+```
+
+Classe foi definida como TopoProjeto, que herda da classe Topo. Após a implementação da build(), houve a criação dos switches.
+- addSwitch cria um switch virtual OpenFlow.
+- s1, s2 e s3 são os switches criados.
+``` python
+s1 = self.addSwitch("s1")
+s2 = self.addSwitch("s2")
+s3 = self.addSwitch("s3")
+```
+
+Então a criação dos hosts.
+- addHost cria um host virtual.
+- h1, h2 e h3 são os hosts criados.
+- eles serão os usados para criar o tráfego (ping, iperf, etc)
+``` python
+h1 = self.addHost("h1")
+h2 = self.addHost("h2")
+h3 = self.addHost("h3")
+```
+
+Então a criação dos links. Os links são criados entre os hosts e switches, e entre os switches. Os links entre switches têm atraso e largura de banda definidos.
+- addLink cria um link entre dois dispositivos.
+- delay define o atraso do link em milissegundos.
+- bw define a largura de banda do link em Mbps, sendo 100Mbps para esse projeto.
+``` python
+self.addLink(h1, s1)
+self.addLink(h2, s2)
+self.addLink(h3, s3)
+
+self.addLink(s1, s2, delay="10ms", bw=100)
+self.addLink(s2, s3, delay="15ms", bw=100)
+```
+
 A topologia foi iniciada com:
 
 ``` bash
@@ -175,12 +215,12 @@ mininet> h2 iperf -c h3 -t 10
 
 #### 11.1 Resultados Obtidos
 
-  Comunicação          Vazão Média
-  -------------------- -------------
-  h1 → h2              \~94.8 Mbps
-  h1 → h3              \~93.2 Mbps
-  h2 → h3              \~95.1 Mbps
-  h2 → h3 (variação)   \~74.6 Mbps
+| Comunicação        | Vazão Média |
+|-------------------|-------------|
+| h1 → h2           | ~94.8 Mbps  |
+| h1 → h3           | ~93.2 Mbps  |
+| h2 → h3           | ~95.1 Mbps  |
+| h2 → h3 (variação)| ~74.6 Mbps  |
 
 #### 11.2 Análise
 
